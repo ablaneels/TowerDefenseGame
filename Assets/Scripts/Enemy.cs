@@ -18,7 +18,7 @@ public class Enemy : MonoBehaviour
     private SpriteRenderer _spriteRenderer;
 
     private int _currentWaypointIndex;
-    private EnemyHealth _enemyHealth;
+    public EnemyHealth _enemyHealth;
 
     // Start is called before the first frame update
     void Start()
@@ -88,6 +88,6 @@ public class Enemy : MonoBehaviour
     {
         OnEndReached?.Invoke(this);
         _enemyHealth.ResetHealth();
-        ObjectPooler.ReturnToPool(gameObject);
+        EnemiesPooler.ReturnToPool(gameObject);
     }
 }

@@ -1,20 +1,22 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class LevelManager : MonoBehaviour
 {
     [SerializeField] private int lives = 10;
 
-    public int TotalLives {get; set; }
-    public int CurrentWave {get; set; }
+    public Waypoint CurrentWayPoint;
+    public Spawner spawner;
+    public EnemiesPooler enemiesPooler;
+
+    public int TotalLives;
+    public int CurrentWave;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         TotalLives = lives;
         CurrentWave = 1;
+        enemiesPooler.CreatePooler();
     }
 
     private void ReduceLives(Enemy enemy)
@@ -29,12 +31,15 @@ public class LevelManager : MonoBehaviour
 
     private void GameOver()
     {
-
+        Debug.Log("GAMEOVER");
     }
 
-    private void WaveCompleted()
+    public void WaveCompleted()
     {
-
+        if (TotalLives > 0)
+            Debug.Log("WAVECOMPLETED");
+        else
+            GameOver();
     }
 
     private void OnEnable()

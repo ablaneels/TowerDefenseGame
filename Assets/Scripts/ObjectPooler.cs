@@ -7,14 +7,14 @@ public class ObjectPooler : MonoBehaviour
     [SerializeField] private GameObject prefab;
     [SerializeField] private int poolSize;
     private List<GameObject> _pool;
-    private GameObject _poolContainer;
+    public GameObject _poolContainer;
 
     private void Awake()
     {
         poolSize = 10;
         _pool = new List<GameObject>();
         _poolContainer = new GameObject($"Pool - {prefab.name}");
-        CreatePooler();
+        //CreatePooler();
     }
 
     private void CreatePooler()
@@ -48,13 +48,11 @@ public class ObjectPooler : MonoBehaviour
     public static void ReturnToPool(GameObject instance)
     {
         instance.SetActive(false);
-        GameObject.Find("Map_1").GetComponent<Spawner>().ennemiesRemaining -= 1;
     }
 
     public static IEnumerator ReturnToPoolWithDelay(GameObject instance, float delay)
     {
         yield return new WaitForSeconds(delay);
         instance.SetActive(false);
-        GameObject.Find("Map_1").GetComponent<Spawner>().ennemiesRemaining -= 1;
     }
 }

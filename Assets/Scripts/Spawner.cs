@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Spawner : MonoBehaviour
 {
@@ -11,17 +12,23 @@ public class Spawner : MonoBehaviour
     [Header ("Fixed Delay")]
     [SerializeField] private float delayBtwSpawns;
 
-    public int ennemiesRemaining;
+    public event OnVariableChangeDelegate OnVariableChange;
+    public delegate void OnVariableChangeDelegate(int newVal);
+
+    public LevelManager levelManager;
 
     private float _spawnTimer;
     private int _ennemiesSpawned;
 
-    private ObjectPooler _pooler;
+    private EnemiesPooler _pooler;
+    private EventSender _eventSender;
 
     // Start is called before the first frame update
     void Start()
     {
-        _pooler = GetComponent<ObjectPooler>();
+        _pooler = GetComponent<EnemiesPooler>();
+        _eventSender = GameObject.FindObjectOfType<EventSender>();
+        _eventSender.OnVariableChange += VariableChangeHandler;
     }
 
     // Update is called once per frame
@@ -34,7 +41,7 @@ public class Spawner : MonoBehaviour
             if (_ennemiesSpawned < ennemyCount)
             {
                 _ennemiesSpawned++;
-                ennemiesRemaining++;
+                _eventSender.ennemiesRemaining++;
                 SpawnEnnemy();
             }
         }
@@ -43,7 +50,16 @@ public class Spawner : MonoBehaviour
     private void SpawnEnnemy()
     {
         GameObject newInstance = _pooler.GetInstanceFromPool();
-        newInstance.GetComponent<Enemy>().Waypoint = GetComponent<Waypoint>();
+        newInstance.GetComponent<Enemy>().Waypoint = levelManager.CurrentWayPoint;
         newInstance.SetActive(true);
+    }
+
+    private void VariableChangeHandler(int newVal)
+    {
+        Debug.Log("Event Fired. MyFloat = " + newVal);
+        if (newVal <= 0)
+        {
+            levelManager.WaveCompleted();
+        }
     }
 }

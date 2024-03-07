@@ -48,7 +48,7 @@ public class EnemyHealth : MonoBehaviour
         if (CurrentHealth <= 0)
         {
             CurrentHealth = 0;
-            ObjectPooler.ReturnToPool(gameObject);
+            EnemiesPooler.ReturnToPool(gameObject);
         }
         else
             OnEnemyHit?. Invoke(_enemy);
