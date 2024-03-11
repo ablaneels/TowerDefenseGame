@@ -6,11 +6,13 @@ public class Weapon : MonoBehaviour
 {
     public List<Enemy> _enemies;
     public Enemy CurrentEnemyTarget;
+    public WeaponUpgrade WeaponUpgrade;
 
     // Start is called before the first frame update
     void Start()
     {
         _enemies = new List<Enemy>();
+        WeaponUpgrade = GetComponent<WeaponUpgrade>();
     }
 
     // Update is called once per frame
