@@ -56,7 +56,6 @@ public class Spawner : MonoBehaviour
 
     private void VariableChangeHandler(int newVal)
     {
-        Debug.Log("Event Fired. MyFloat = " + newVal);
         if (newVal <= 0)
         {
             levelManager.WaveCompleted();

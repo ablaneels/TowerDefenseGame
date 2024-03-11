@@ -149,8 +149,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MoveSpeed: 1
-  DeathCoinReward: 2
+  DeathCoinReward: 30
   Waypoint: {fileID: 0}
+  _enemyHealth: {fileID: 0}
 --- !u!61 &1146338985059039294
 BoxCollider2D:
   m_ObjectHideFlags: 0
