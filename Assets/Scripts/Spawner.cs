@@ -39,26 +39,30 @@ public class Spawner : MonoBehaviour
         {
             _spawnTimer = delayBtwSpawns;
             if (_ennemiesSpawned < ennemyCount)
-            {
-                _ennemiesSpawned++;
-                _eventSender.ennemiesRemaining++;
                 SpawnEnnemy();
-            }
         }
     }
 
     private void SpawnEnnemy()
     {
-        GameObject newInstance = _pooler.GetInstanceFromPool();
+        GameObject newInstance = _pooler.GetInstanceFromPool(_ennemiesSpawned);
         newInstance.GetComponent<Enemy>().Waypoint = levelManager.CurrentWayPoint;
         newInstance.SetActive(true);
+        _ennemiesSpawned++;
+        _eventSender.ennemiesRemaining++;
     }
 
     private void VariableChangeHandler(int newVal)
     {
-        if (newVal <= 0)
+        if (newVal <= 0 && _ennemiesSpawned == ennemyCount)
         {
             levelManager.WaveCompleted();
         }
+    }
+
+    public void ResetSpawner()
+    {
+        _ennemiesSpawned = 0;
+        ennemyCount += 5;
     }
 }

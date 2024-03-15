@@ -2,10 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using System;
 
 public class CurrencySystem : MonoBehaviour
 {
     public static CurrencySystem Instance { get; private set; }
+
+    public static Action<CurrencySystem> OnUpdateUIMoney;
 
     [SerializeField] private int coinTest;
     private string CURRENCY_SAVE_KEY = "GAME_CURRENCY";
@@ -38,6 +41,7 @@ public class CurrencySystem : MonoBehaviour
         TotalCoins += amount;
         PlayerPrefs.SetInt(CURRENCY_SAVE_KEY, TotalCoins);
         PlayerPrefs.Save();
+        OnUpdateUIMoney?.Invoke(this);
     }
 
     public void RemoveCoins(int amount)
@@ -47,6 +51,7 @@ public class CurrencySystem : MonoBehaviour
             TotalCoins -= amount;
             PlayerPrefs.SetInt(CURRENCY_SAVE_KEY, TotalCoins);
             PlayerPrefs.Save();
+            OnUpdateUIMoney?.Invoke(this);
         }
     }
 

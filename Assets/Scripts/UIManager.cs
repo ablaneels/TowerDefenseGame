@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class UIManager : MonoBehaviour
@@ -7,7 +8,9 @@ public class UIManager : MonoBehaviour
     public static UIManager Instance { get; private set; }
 
     public GameObject canvas;
-    public GameObject shop;
+    public TextMeshProUGUI money;
+    public TextMeshProUGUI wave;
+
     public Node Node { get; set; }
 
     private void Awake() {
@@ -20,18 +23,40 @@ public class UIManager : MonoBehaviour
         Instance = this;
     }
 
-    public void CloseWeaponShopPanel()
+    public void UpdateMoney(int newValue)
     {
-        shop.SetActive(false);
+        money.text = newValue.ToString();
     }
 
-    public void OpenWeaponShopPanel()
+    public void UpdateWave(int newValue)
     {
-        shop.SetActive(true);
+        wave.text = "Wave " + newValue.ToString();
     }
 
     public void SetNode(Node node)
     {
         Node = node;
+    }
+
+    private void UpdateMoney(CurrencySystem currencySystem)
+    {
+        UpdateMoney(currencySystem.TotalCoins);
+    }
+
+    private void UpdateWave(LevelManager levelManager)
+    {
+        UpdateWave(levelManager.CurrentWave);
+    }
+
+    private void OnEnable()
+    {
+        CurrencySystem.OnUpdateUIMoney += UpdateMoney;
+        LevelManager.OnUpdateUILevel += UpdateWave;
+    }
+
+    private void OnDisable()
+    {
+        CurrencySystem.OnUpdateUIMoney  -= UpdateMoney;
+        LevelManager.OnUpdateUILevel -= UpdateWave;
     }
 }

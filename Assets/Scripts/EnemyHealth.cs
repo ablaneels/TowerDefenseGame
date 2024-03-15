@@ -49,9 +49,10 @@ public class EnemyHealth : MonoBehaviour
         {
             CurrentHealth = 0;
             EnemiesPooler.ReturnToPool(gameObject);
+            OnEnemyKilled?.Invoke(_enemy);
         }
         else
-            OnEnemyHit?. Invoke(_enemy);
+            OnEnemyHit?.Invoke(_enemy);
     }
 
     public void ResetHealth()

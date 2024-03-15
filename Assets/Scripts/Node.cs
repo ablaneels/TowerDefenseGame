@@ -8,18 +8,7 @@ public class Node : MonoBehaviour
     public static Action<Node> OnNodeSelected;
     public static Action onWeaponSold;
 
-    [SerializeField] private GameObject attackRangeSprite;
-
     public Weapon Weapon { get; set; }
-
-    private float _rangeSize;
-    private Vector3 _rangeOriginalSize;
-
-    void Start()
-    {
-        _rangeSize = attackRangeSprite.GetComponent<SpriteRenderer>().bounds.size.y;
-        _rangeOriginalSize = attackRangeSprite.transform.localScale;
-    }
 
     public void SetWeapon(Weapon weapon)
     {
@@ -29,11 +18,6 @@ public class Node : MonoBehaviour
     public bool IsEmpty()
     {
         return Weapon == null;
-    }
-
-    public void CloseAttackRangeSprite()
-    {
-        attackRangeSprite.SetActive(false);
     }
 
     public void SelectWeapon()
@@ -52,7 +36,6 @@ public class Node : MonoBehaviour
             CurrencySystem.Instance.AddCoins(Weapon.WeaponUpgrade.GetSellValue());
             Destroy(Weapon.gameObject);
             Weapon = null;
-            attackRangeSprite.SetActive(false);
             onWeaponSold?.Invoke();
         }
     }
@@ -60,6 +43,5 @@ public class Node : MonoBehaviour
     public void ShowWeaponInfo()
     {
         UIManager.Instance.SetNode(this);
-        UIManager.Instance.OpenWeaponShopPanel();
     }
 }

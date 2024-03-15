@@ -23,13 +23,9 @@ public class WeaponCard : MonoBehaviour
 
     public void PlaceWeapon()
     {
-        Debug.Log("hello 0");
         if (CurrencySystem.Instance.TotalCoins >= WeaponLoaded.WeaponShopCost)
         {
-            Debug.Log("hello 1");
             CurrencySystem.Instance.RemoveCoins(WeaponLoaded.WeaponShopCost);
-            Debug.Log("hello 2");
-            UIManager.Instance.CloseWeaponShopPanel();
             Instantiate(weapon, UIManager.Instance.Node.transform);
         }
     }

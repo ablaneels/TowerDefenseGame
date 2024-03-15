@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.PlayerLoop;
 
 public class EnemiesPooler : MonoBehaviour
 {
@@ -14,9 +15,7 @@ public class EnemiesPooler : MonoBehaviour
 
     private void Awake()
     {
-        poolSize = 10;
-        _pool = new List<GameObject>();
-        _poolContainer = new GameObject($"Pool - Enemy");
+        InitPooler();
         //CreatePooler();
     }
 
@@ -24,7 +23,6 @@ public class EnemiesPooler : MonoBehaviour
     {
         for (int i = 0; i < poolSize; i++)
         {
-            Debug.Log(levelManager.CurrentWave);
             if (levelManager.CurrentWave == 1)
                 enemyType = 0;
             else if (levelManager.CurrentWave == 2)
@@ -47,6 +45,18 @@ public class EnemiesPooler : MonoBehaviour
         }
     }
 
+    public void InitPooler()
+    {
+        if (levelManager.CurrentWave > 1)
+            poolSize += 5;
+        else
+            poolSize = 10;
+        _pool = new List<GameObject>();
+        if (_poolContainer != null)
+            Destroy(_poolContainer);
+        _poolContainer = new GameObject($"Pool - Enemy");
+    }
+
     private GameObject CreateInstance()
     {
         GameObject newInstance = Instantiate(prefab[enemyType]);
@@ -55,9 +65,9 @@ public class EnemiesPooler : MonoBehaviour
         return newInstance;
     }
 
-    public GameObject GetInstanceFromPool()
+    public GameObject GetInstanceFromPool(int next)
     {
-        for (int i = 0; i < _pool.Count; i++)
+        for (int i = next; i < _pool.Count; i++)
         {
             if (!_pool[i].activeInHierarchy)
             {
@@ -70,8 +80,7 @@ public class EnemiesPooler : MonoBehaviour
     public static void ReturnToPool(GameObject instance)
     {
         EventSender _eventSender;
-        _eventSender = GameObject.FindObjectOfType<EventSender>();
-
+        _eventSender = FindObjectOfType<EventSender>();
         instance.SetActive(false);
         _eventSender.ennemiesRemaining -= 1;
     }
