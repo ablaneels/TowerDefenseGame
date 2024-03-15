@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9031383800521761910}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: HealthBarPosition
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -45,7 +45,7 @@ GameObject:
   - component: {fileID: 4649321995048641029}
   - component: {fileID: 6503268579442625948}
   - component: {fileID: 6984026916272638754}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Enemy_1
   m_TagString: Enemy
   m_Icon: {fileID: 0}
