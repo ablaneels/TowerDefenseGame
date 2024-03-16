@@ -2,9 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using System;
 
 public class Spawner : MonoBehaviour
 {
+    public static Action<Spawner> OnUpdateWaveEnnemies;
+
     [Header ("Settings")]
     [SerializeField] private int ennemyCount = 10;
     [SerializeField] private GameObject testGo;
@@ -12,8 +15,8 @@ public class Spawner : MonoBehaviour
     [Header ("Fixed Delay")]
     [SerializeField] private float delayBtwSpawns;
 
-    public event OnVariableChangeDelegate OnVariableChange;
-    public delegate void OnVariableChangeDelegate(int newVal);
+    public event OnEnnemiesRemainingChangeDelegate OnEnnemiesRemainingChangeChange;
+    public delegate void OnEnnemiesRemainingChangeDelegate(int newVal);
 
     public LevelManager levelManager;
 
@@ -28,7 +31,7 @@ public class Spawner : MonoBehaviour
     {
         _pooler = GetComponent<EnemiesPooler>();
         _eventSender = GameObject.FindObjectOfType<EventSender>();
-        _eventSender.OnVariableChange += VariableChangeHandler;
+        _eventSender.OnEnnemiesRemainingChange += VariableChangeHandler;
     }
 
     // Update is called once per frame
@@ -64,5 +67,16 @@ public class Spawner : MonoBehaviour
     {
         _ennemiesSpawned = 0;
         ennemyCount += 5;
+        OnUpdateWaveEnnemies?.Invoke(this);
+    }
+
+    public int GetEnnemiesSpawned()
+    {
+        return _ennemiesSpawned;
+    }
+
+    public int GetEnnemyCount()
+    {
+        return ennemyCount;
     }
 }

@@ -5,9 +5,13 @@ using UnityEngine;
 public class EventSender : MonoBehaviour
 {
     private int _ennemiesRemaining = 0;
+    private bool _weaponIsSelected = false;
  
-    public event OnVariableChangeDelegate OnVariableChange;
-    public delegate void OnVariableChangeDelegate(int newVal);
+    public event OnEnnemiesRemainingDelegate OnEnnemiesRemainingChange;
+    public delegate void OnEnnemiesRemainingDelegate(int newVal);
+
+    public event OnWeaponSelectedChangeDelegate OnWeaponSelectedChange;
+    public delegate void OnWeaponSelectedChangeDelegate(bool newVal);
  
     public int ennemiesRemaining
     {
@@ -19,8 +23,23 @@ public class EventSender : MonoBehaviour
         {
             if (_ennemiesRemaining == value) return;
             _ennemiesRemaining = value;
-            if (OnVariableChange != null)
-                OnVariableChange(_ennemiesRemaining);
+            if (OnEnnemiesRemainingChange != null)
+                OnEnnemiesRemainingChange(_ennemiesRemaining);
+        }
+    }
+
+    public bool weaponIsSelected
+    {
+        get
+        {
+            return _weaponIsSelected;
+        }
+        set
+        {
+            if (_weaponIsSelected == value) return;
+            _weaponIsSelected = value;
+            if (OnWeaponSelectedChange != null)
+                OnWeaponSelectedChange(_weaponIsSelected);
         }
     }
 }

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using System;
 
 public class GridManager : MonoBehaviour
 {
@@ -9,8 +10,14 @@ public class GridManager : MonoBehaviour
     [SerializeField] private Transform _cam;
     [SerializeField] private Tilemap tilemap;
 
+    public static Action<bool> OnWeaponIsSelected;
+    private EventSender _eventSender;
+
     private void Start()
     {
+        _eventSender = transform.GetComponent<EventSender>();
+        _eventSender.weaponIsSelected = false;
+        OnWeaponIsSelected.Invoke(false);
         GenerateGrid();
     }
 
@@ -29,5 +36,20 @@ public class GridManager : MonoBehaviour
                 spwanedTile.Init(tile);
             }
         }
+    }
+
+    private void WeaponIsSelected(bool newValue)
+    {
+        _eventSender.weaponIsSelected = newValue;
+    }
+
+    private void OnEnable()
+    {
+        OnWeaponIsSelected += WeaponIsSelected;
+    }
+
+    private void OnDisable()
+    {
+        OnWeaponIsSelected -= WeaponIsSelected;
     }
 }

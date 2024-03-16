@@ -23,9 +23,10 @@ public class Node : MonoBehaviour
     public void SelectWeapon()
     {
         OnNodeSelected?.Invoke(this);
-        if (IsEmpty())
+        if (IsEmpty() && UIManager.Instance.WeaponCard != null)
         {
             ShowWeaponInfo();
+            UIManager.Instance.WeaponCard.PlaceWeapon();
         }
     }
 

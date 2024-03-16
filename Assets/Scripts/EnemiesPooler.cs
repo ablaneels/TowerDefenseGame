@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -82,7 +83,7 @@ public class EnemiesPooler : MonoBehaviour
         EventSender _eventSender;
         _eventSender = FindObjectOfType<EventSender>();
         instance.SetActive(false);
-        _eventSender.ennemiesRemaining -= 1;
+        _eventSender.ennemiesRemaining = Convert.ToInt32(_eventSender.ennemiesRemaining) - 1;
     }
 
     public static IEnumerator ReturnToPoolWithDelay(GameObject instance, float delay)
@@ -92,6 +93,6 @@ public class EnemiesPooler : MonoBehaviour
 
         yield return new WaitForSeconds(delay);
         instance.SetActive(false);
-        _eventSender.ennemiesRemaining -= 1;
+        _eventSender.ennemiesRemaining = Convert.ToInt32(_eventSender.ennemiesRemaining) - 1;
     }
 }

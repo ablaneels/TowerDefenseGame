@@ -34,6 +34,7 @@ public class CurrencySystem : MonoBehaviour
     private void LoadCoins()
     {
         TotalCoins = PlayerPrefs.GetInt(CURRENCY_SAVE_KEY, coinTest);
+        OnUpdateUIMoney?.Invoke(this);
     }
 
     public void AddCoins(int amount)

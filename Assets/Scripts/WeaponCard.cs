@@ -21,12 +21,22 @@ public class WeaponCard : MonoBehaviour
         weapon = weaponSettings.WeaponPrefab;
     }
 
+    public void SelectWeapon()
+    {
+        UIManager.Instance.SetWeaponCard(this);
+        GridManager.OnWeaponIsSelected?.Invoke(true);
+    }
+
     public void PlaceWeapon()
     {
         if (CurrencySystem.Instance.TotalCoins >= WeaponLoaded.WeaponShopCost)
         {
             CurrencySystem.Instance.RemoveCoins(WeaponLoaded.WeaponShopCost);
             Instantiate(weapon, UIManager.Instance.Node.transform);
+            UIManager.Instance.WeaponCard = null;
+            UIManager.Instance.Node = null;
+
         }
+        GridManager.OnWeaponIsSelected?.Invoke(false);
     }
 }

@@ -11,7 +11,14 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI money;
     public TextMeshProUGUI wave;
 
+    private int currentWave;
+    private int enemyType1;
+    private int enemyType2;
+    private int enemyType3;
+
+
     public Node Node { get; set; }
+    public WeaponCard WeaponCard { get; set; }
 
     private void Awake() {
         if (Instance != null)
@@ -30,12 +37,38 @@ public class UIManager : MonoBehaviour
 
     public void UpdateWave(int newValue)
     {
-        wave.text = "Wave " + newValue.ToString();
+        currentWave = newValue;
+        wave.text = "Wave " + currentWave.ToString();
+    }
+
+    public void UpdateWaveEnnemies(int newValue)
+    {
+        enemyType1 = 0;
+        enemyType1 = 0;
+        enemyType3 = 0;
+        if (currentWave == 1)
+            enemyType1 = newValue;
+        else if (currentWave == 2)
+        {
+            enemyType1 = newValue / 2;
+            enemyType2 = newValue / 2;
+        }
+        else
+        {
+            enemyType1 = newValue / 3;
+            enemyType2 = newValue / 3;
+            enemyType3 = newValue / 3;
+        }
     }
 
     public void SetNode(Node node)
     {
         Node = node;
+    }
+
+    public void SetWeaponCard(WeaponCard weaponCard)
+    {
+        WeaponCard = weaponCard;
     }
 
     private void UpdateMoney(CurrencySystem currencySystem)
@@ -48,15 +81,22 @@ public class UIManager : MonoBehaviour
         UpdateWave(levelManager.CurrentWave);
     }
 
+    private void UpdateWaveEnnemies(Spawner spawner)
+    {
+        UpdateWaveEnnemies(spawner.GetEnnemiesSpawned());
+    }
+
     private void OnEnable()
     {
         CurrencySystem.OnUpdateUIMoney += UpdateMoney;
         LevelManager.OnUpdateUILevel += UpdateWave;
+        Spawner.OnUpdateWaveEnnemies += UpdateWaveEnnemies;
     }
 
     private void OnDisable()
     {
         CurrencySystem.OnUpdateUIMoney  -= UpdateMoney;
         LevelManager.OnUpdateUILevel -= UpdateWave;
+        Spawner.OnUpdateWaveEnnemies += UpdateWaveEnnemies;
     }
 }

@@ -16,7 +16,6 @@ public class LevelManager : MonoBehaviour
     public int TotalLives;
     public int CurrentWave;
 
-    // Start is called before the first frame update
     void Awake()
     {
         if (Instance != null)
@@ -29,6 +28,11 @@ public class LevelManager : MonoBehaviour
         TotalLives = lives;
         CurrentWave = 1;
         enemiesPooler.CreatePooler();
+    }
+
+    private void Start() {
+        OnUpdateUILevel?.Invoke(this);
+        Spawner.OnUpdateWaveEnnemies?.Invoke(spawner);
     }
 
     private void ReduceLives(Enemy enemy)
@@ -69,10 +73,5 @@ public class LevelManager : MonoBehaviour
     private void OnDisable()
     {
         Enemy.OnEndReached -= ReduceLives;
-    }
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }
