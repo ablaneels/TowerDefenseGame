@@ -32,7 +32,9 @@ public class WeaponCard : MonoBehaviour
         if (CurrencySystem.Instance.TotalCoins >= WeaponLoaded.WeaponShopCost)
         {
             CurrencySystem.Instance.RemoveCoins(WeaponLoaded.WeaponShopCost);
-            Instantiate(weapon, UIManager.Instance.Node.transform);
+            var CurrentWeapon = Instantiate(weapon, UIManager.Instance.Node.transform);
+            UIManager.Instance.Node.transform.GetComponent<Tile>().weapon = CurrentWeapon.GetComponent<Weapon>();
+            UIManager.Instance.Node.transform.GetComponent<Tile>().SetIsAvailable(false);
             UIManager.Instance.WeaponCard = null;
             UIManager.Instance.Node = null;
 

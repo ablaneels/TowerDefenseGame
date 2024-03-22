@@ -57,6 +57,15 @@ public class LevelManager : MonoBehaviour
             Debug.Log("WAVECOMPLETED");
             CurrentWave += 1;
             OnUpdateUILevel?.Invoke(this);
+            if (CurrentWave > 3)
+            {
+                enemiesPooler.enemy1Health += 10;
+                enemiesPooler.enemy2Health += 10;
+                enemiesPooler.enemy3Health += 10;
+                enemiesPooler.enemy1MoveSpeed += 0.5f;
+                enemiesPooler.enemy2MoveSpeed += 0.3f;
+                enemiesPooler.enemy3MoveSpeed += 0.1f;
+            }
             enemiesPooler.InitPooler();
             enemiesPooler.CreatePooler();
             spawner.ResetSpawner();

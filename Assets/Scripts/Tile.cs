@@ -16,6 +16,7 @@ public class Tile : MonoBehaviour
     private bool IsAvailable;
     private EventSender _eventSender;
     private bool weaponIsSelected;
+    public Weapon weapon;
 
     public void Init(TileBase tile)
     {
@@ -29,6 +30,10 @@ public class Tile : MonoBehaviour
     }
 
     private void OnMouseEnter() {
+        if(weapon != null)
+        {
+            weapon.weaponRange.SetActive(true);
+        }
         if (weaponIsSelected)
         {
             if (IsAvailable)
@@ -45,6 +50,10 @@ public class Tile : MonoBehaviour
     }
 
     private void OnMouseExit() {
+        if(weapon != null)
+        {
+            weapon.weaponRange.SetActive(false);
+        }
         _highlightGreen.SetActive(false);
         _highlightRed.SetActive(false);
     }
@@ -52,5 +61,15 @@ public class Tile : MonoBehaviour
     private void VariableChangeHandler(bool newVal)
     {
         weaponIsSelected = newVal;
+    }
+
+    public bool GetIsAvailable()
+    {
+        return IsAvailable;
+    }
+
+    public void SetIsAvailable(bool newValue)
+    {
+        IsAvailable = newValue;
     }
 }

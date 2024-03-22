@@ -14,8 +14,21 @@ public class EnemiesPooler : MonoBehaviour
     private GameObject _poolContainer;
     private int enemyType;
 
+    public int enemy1Health;
+    public int enemy2Health;
+    public int enemy3Health;
+    public float enemy1MoveSpeed;
+    public float enemy2MoveSpeed;
+    public float enemy3MoveSpeed;
+
     private void Awake()
     {
+        enemy1Health = 60;
+        enemy2Health = 90;
+        enemy3Health = 120;
+        enemy1MoveSpeed = 2f;
+        enemy2MoveSpeed = 1.5f;
+        enemy3MoveSpeed = 1f;
         InitPooler();
         //CreatePooler();
     }
@@ -53,9 +66,8 @@ public class EnemiesPooler : MonoBehaviour
         else
             poolSize = 10;
         _pool = new List<GameObject>();
-        if (_poolContainer != null)
-            Destroy(_poolContainer);
-        _poolContainer = new GameObject($"Pool - Enemy");
+        if (_poolContainer == null)
+            _poolContainer = new GameObject($"Pool - Enemy");
     }
 
     private GameObject CreateInstance()
@@ -63,6 +75,28 @@ public class EnemiesPooler : MonoBehaviour
         GameObject newInstance = Instantiate(prefab[enemyType]);
         newInstance.transform.SetParent(_poolContainer.transform);
         newInstance.SetActive(false);
+        if (levelManager.CurrentWave > 3)
+        {
+            if (newInstance.GetComponent<EnemyHealth>().initialHealth == 60)
+            {
+                newInstance.GetComponent<EnemyHealth>().initialHealth = enemy1Health;
+                newInstance.GetComponent<EnemyHealth>().maxHealth = enemy1Health;
+                newInstance.GetComponent<Enemy>().MoveSpeed = enemy1MoveSpeed;
+            }
+            else if (newInstance.GetComponent<EnemyHealth>().initialHealth == 90)
+            {
+                newInstance.GetComponent<EnemyHealth>().initialHealth = enemy2Health;
+                newInstance.GetComponent<EnemyHealth>().maxHealth = enemy2Health;
+                newInstance.GetComponent<Enemy>().MoveSpeed = enemy2MoveSpeed;
+            }
+            else if (newInstance.GetComponent<EnemyHealth>().initialHealth == 120)
+            {
+                newInstance.GetComponent<EnemyHealth>().initialHealth = enemy3Health;
+                newInstance.GetComponent<EnemyHealth>().maxHealth = enemy3Health;
+                newInstance.GetComponent<Enemy>().MoveSpeed = enemy3MoveSpeed;
+            }
+
+        }
         return newInstance;
     }
 
@@ -82,8 +116,8 @@ public class EnemiesPooler : MonoBehaviour
     {
         EventSender _eventSender;
         _eventSender = FindObjectOfType<EventSender>();
-        instance.SetActive(false);
-        _eventSender.ennemiesRemaining = Convert.ToInt32(_eventSender.ennemiesRemaining) - 1;
+        Destroy(instance);
+        _eventSender.ennemiesRemaining--;
     }
 
     public static IEnumerator ReturnToPoolWithDelay(GameObject instance, float delay)
@@ -92,7 +126,7 @@ public class EnemiesPooler : MonoBehaviour
         _eventSender = GameObject.FindObjectOfType<EventSender>();
 
         yield return new WaitForSeconds(delay);
-        instance.SetActive(false);
-        _eventSender.ennemiesRemaining = Convert.ToInt32(_eventSender.ennemiesRemaining) - 1;
+        Destroy(instance);
+        _eventSender.ennemiesRemaining--;
     }
 }

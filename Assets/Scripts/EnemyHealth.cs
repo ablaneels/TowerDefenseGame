@@ -11,8 +11,8 @@ public class EnemyHealth : MonoBehaviour
 
     [SerializeField] private GameObject healthBarPrefab;
     [SerializeField] private Transform barPosition;
-    [SerializeField] private float initialHealth = 10f;
-    [SerializeField] private float maxHealth = 10f;
+    [SerializeField] public float initialHealth;
+    [SerializeField] public float maxHealth;
 
     public float CurrentHealth { get; set; }
 
@@ -27,10 +27,6 @@ public class EnemyHealth : MonoBehaviour
     }
     private void Update()
     {
-        if (Input. GetKeyDown(KeyCode.P))
-        {
-            DealDamage (5f);
-        }
         _healthBar.fillAmount = Mathf.Lerp(_healthBar.fillAmount, CurrentHealth / maxHealth, Time.deltaTime * 10f);
     }
     
@@ -47,6 +43,7 @@ public class EnemyHealth : MonoBehaviour
         CurrentHealth -= damageReceived;
         if (CurrentHealth <= 0)
         {
+            Debug.Log("I'm dead now: ");
             CurrentHealth = 0;
             EnemiesPooler.ReturnToPool(gameObject);
             OnEnemyKilled?.Invoke(_enemy);

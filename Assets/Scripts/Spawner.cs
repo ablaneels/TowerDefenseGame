@@ -10,6 +10,7 @@ public class Spawner : MonoBehaviour
 
     [Header ("Settings")]
     [SerializeField] private int ennemyCount = 10;
+    [SerializeField] private int ennemyCountToKill = 10;
     [SerializeField] private GameObject testGo;
 
     [Header ("Fixed Delay")]
@@ -41,7 +42,7 @@ public class Spawner : MonoBehaviour
         if (_spawnTimer < 0)
         {
             _spawnTimer = delayBtwSpawns;
-            if (_ennemiesSpawned < ennemyCount)
+            if (_ennemiesSpawned < ennemyCountToKill)
                 SpawnEnnemy();
         }
     }
@@ -57,16 +58,41 @@ public class Spawner : MonoBehaviour
 
     private void VariableChangeHandler(int newVal)
     {
-        if (newVal <= 0 && _ennemiesSpawned == ennemyCount)
+        if (newVal < 0)
+            newVal = 0;
+        Debug.Log("VariableChangeHandler newVal: " + newVal);
+        Debug.Log("VariableChangeHandler _ennemiesSpawned: " + _ennemiesSpawned);
+        Debug.Log("VariableChangeHandler ennemyCount: " + ennemyCount);
+        if (newVal <= 0 && _ennemiesSpawned == ennemyCountToKill)
         {
             levelManager.WaveCompleted();
         }
+    }
+
+    public void SpawnNextWave()
+    {
+        ennemyCount += 5;
+        ennemyCountToKill += (ennemyCount + 5);
+        levelManager.CurrentWave += 1;
+        LevelManager.OnUpdateUILevel?.Invoke(levelManager);
+        if (levelManager.CurrentWave > 3)
+        {
+            _pooler.enemy1Health += 10;
+            _pooler.enemy2Health += 10;
+            _pooler.enemy3Health += 10;
+            _pooler.enemy1MoveSpeed += 0.5f;
+            _pooler.enemy2MoveSpeed += 0.3f;
+            _pooler.enemy3MoveSpeed += 0.1f;
+        }
+        _pooler.CreatePooler();
+        OnUpdateWaveEnnemies?.Invoke(this);
     }
 
     public void ResetSpawner()
     {
         _ennemiesSpawned = 0;
         ennemyCount += 5;
+        ennemyCountToKill = ennemyCount;
         OnUpdateWaveEnnemies?.Invoke(this);
     }
 

@@ -7,6 +7,7 @@ public class Weapon : MonoBehaviour
     public List<Enemy> _enemies;
     public Enemy CurrentEnemyTarget;
     public WeaponUpgrade WeaponUpgrade;
+    public GameObject weaponRange;
 
     // Start is called before the first frame update
     void Start()

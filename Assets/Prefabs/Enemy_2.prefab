@@ -134,8 +134,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthBarPrefab: {fileID: 2262663516251865096, guid: 4683ac9b37e1048f09d2d0088c701b43, type: 3}
   barPosition: {fileID: 6149255474064894341}
-  initialHealth: 45
-  maxHealth: 45
+  initialHealth: 90
+  maxHealth: 90
 --- !u!114 &3637284494335333397
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -148,7 +148,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3fa86ace8bb024c60b25192f4a13bf69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MoveSpeed: 1
+  MoveSpeed: 1.5
   DeathCoinReward: 20
   Waypoint: {fileID: 0}
   _enemyHealth: {fileID: 0}

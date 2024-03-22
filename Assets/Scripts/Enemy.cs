@@ -8,7 +8,7 @@ public class Enemy : MonoBehaviour
 {
     public static Action<Enemy> OnEndReached;
 
-    public int MoveSpeed;
+    public float MoveSpeed;
     public int DeathCoinReward;
     public Waypoint Waypoint;
 
@@ -88,6 +88,6 @@ public class Enemy : MonoBehaviour
     {
         OnEndReached?.Invoke(this);
         _enemyHealth.ResetHealth();
-        EnemiesPooler.ReturnToPool(gameObject);
+        EnemiesPooler.ReturnToPoolWithDelay(gameObject, 0f);
     }
 }
