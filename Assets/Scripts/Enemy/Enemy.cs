@@ -88,6 +88,6 @@ public class Enemy : MonoBehaviour
     {
         OnEndReached?.Invoke(this);
         _enemyHealth.ResetHealth();
-        EnemiesPooler.ReturnToPoolWithDelay(gameObject, 0f);
+        EnemiesPooler.ReturnToPool(gameObject);
     }
 }

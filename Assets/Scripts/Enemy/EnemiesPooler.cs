@@ -112,6 +112,11 @@ public class EnemiesPooler : MonoBehaviour
         return CreateInstance();
     }
 
+    public void EndOfGame()
+    {
+        Destroy(_poolContainer);
+    }
+
     public static void ReturnToPool(GameObject instance)
     {
         EventSender _eventSender;
@@ -123,7 +128,7 @@ public class EnemiesPooler : MonoBehaviour
     public static IEnumerator ReturnToPoolWithDelay(GameObject instance, float delay)
     {
         EventSender _eventSender;
-        _eventSender = GameObject.FindObjectOfType<EventSender>();
+        _eventSender = FindObjectOfType<EventSender>();
 
         yield return new WaitForSeconds(delay);
         Destroy(instance);

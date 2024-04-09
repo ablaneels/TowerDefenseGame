@@ -71,7 +71,7 @@ public class LevelManager : MonoBehaviour
             scores = new List<int>();
         }
 
-        TotalLives = lives;
+        //TotalLives = lives;
         CurrentWave = 1;
         enemiesPooler.CreatePooler();
     }
@@ -83,6 +83,7 @@ public class LevelManager : MonoBehaviour
 
     private void ReduceLives(Enemy enemy)
     {
+        Debug.Log("TotalLives: " + TotalLives);
         TotalLives--;
         if (TotalLives <= 0)
         {
@@ -104,6 +105,7 @@ public class LevelManager : MonoBehaviour
     private void GameOver()
     {
         EndOfGamel = true;
+        enemiesPooler.EndOfGame();
         scores.Add(newScore);
         uIManager.lostUI.transform.Find("Score").GetComponent<TextMeshProUGUI>().text = newScore.ToString();
         Debug.Log("GAMEOVER");
