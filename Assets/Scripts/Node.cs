@@ -23,7 +23,7 @@ public class Node : MonoBehaviour
     public void SelectWeapon()
     {
         OnNodeSelected?.Invoke(this);
-        if (IsEmpty() && UIManager.Instance.WeaponCard != null)
+        if (IsEmpty() && UIManager.Instance.WeaponCard != null && GridManager.TileIsAvailable)
         {
             ShowWeaponInfo();
             UIManager.Instance.WeaponCard.PlaceWeapon();

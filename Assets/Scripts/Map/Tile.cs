@@ -40,11 +40,13 @@ public class Tile : MonoBehaviour
             {
                 _highlightGreen.SetActive(true);
                 _highlightRed.SetActive(false);
+                GridManager.TileIsAvailable = true;
             }
             else
             {
                 _highlightGreen.SetActive(false);
                 _highlightRed.SetActive(true);
+                GridManager.TileIsAvailable = false;
             }
         }
     }

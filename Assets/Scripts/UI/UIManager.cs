@@ -11,6 +11,8 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI money;
     public TextMeshProUGUI wave;
     public GameObject nextWaveUI;
+    public GameObject winUI;
+    public GameObject lostUI;
 
     private int currentWave;
     private int enemyType1;
@@ -106,6 +108,26 @@ public class UIManager : MonoBehaviour
     public void SetWeaponCard(WeaponCard weaponCard)
     {
         WeaponCard = weaponCard;
+    }
+
+    public void ShowYouLostUI()
+    {
+        lostUI.SetActive(true);
+    }
+
+    public void ShowYouWinUI()
+    {
+        winUI.SetActive(true);
+    }
+
+    public void HideYouLostUI()
+    {
+        lostUI.SetActive(false);
+    }
+
+    public void HideYouWinUI()
+    {
+        winUI.SetActive(false);
     }
 
     private void UpdateMoney(CurrencySystem currencySystem)

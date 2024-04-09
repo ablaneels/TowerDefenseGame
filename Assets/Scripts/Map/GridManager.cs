@@ -11,10 +11,12 @@ public class GridManager : MonoBehaviour
     [SerializeField] private Tilemap tilemap;
 
     public static Action<bool> OnWeaponIsSelected;
+    public static bool TileIsAvailable;
     private EventSender _eventSender;
 
     private void Start()
     {
+        TileIsAvailable = true;
         _eventSender = transform.GetComponent<EventSender>();
         _eventSender.weaponIsSelected = false;
         OnWeaponIsSelected.Invoke(false);

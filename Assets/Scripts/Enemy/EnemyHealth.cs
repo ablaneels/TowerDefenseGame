@@ -43,7 +43,6 @@ public class EnemyHealth : MonoBehaviour
         CurrentHealth -= damageReceived;
         if (CurrentHealth <= 0)
         {
-            Debug.Log("I'm dead now: ");
             CurrentHealth = 0;
             EnemiesPooler.ReturnToPool(gameObject);
             OnEnemyKilled?.Invoke(_enemy);

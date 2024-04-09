@@ -60,10 +60,7 @@ public class Spawner : MonoBehaviour
     {
         if (newVal < 0)
             newVal = 0;
-        Debug.Log("VariableChangeHandler newVal: " + newVal);
-        Debug.Log("VariableChangeHandler _ennemiesSpawned: " + _ennemiesSpawned);
-        Debug.Log("VariableChangeHandler ennemyCount: " + ennemyCount);
-        if (newVal <= 0 && _ennemiesSpawned == ennemyCountToKill)
+        if (newVal <= 0 && _ennemiesSpawned == ennemyCountToKill && !LevelManager.EndOfGamel)
         {
             levelManager.WaveCompleted();
         }

@@ -22,6 +22,8 @@ public class Projectile : MonoBehaviour
             MoveProjectile();
             RotateProjectile();
         }
+        else
+            Destroy(this.gameObject);
     }
 
     protected virtual void MoveProjectile()

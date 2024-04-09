@@ -40,9 +40,14 @@ public class CurrencySystem : MonoBehaviour
     public void AddCoins(int amount)
     {
         TotalCoins += amount;
-        PlayerPrefs.SetInt(CURRENCY_SAVE_KEY, TotalCoins);
-        PlayerPrefs.Save();
-        OnUpdateUIMoney?.Invoke(this);
+        if (TotalCoins > 300)
+            TotalCoins = 300;
+        if (TotalCoins != PlayerPrefs.GetInt(CURRENCY_SAVE_KEY))
+        {
+            PlayerPrefs.SetInt(CURRENCY_SAVE_KEY, TotalCoins);
+            PlayerPrefs.Save();
+            OnUpdateUIMoney?.Invoke(this);
+        }
     }
 
     public void RemoveCoins(int amount)
