@@ -66,6 +66,8 @@ public class UIManager : MonoBehaviour
 
     public void UpdateNextWaveEnnemies(int newValue)
     {
+        if (!nextWaveUI.activeSelf)
+            return;
         var nextWave = currentWave + 1;
         var nextValue = newValue + 5;
         enemyType1 = 0;
@@ -132,6 +134,10 @@ public class UIManager : MonoBehaviour
 
     private void UpdateWave(LevelManager levelManager)
     {
+        if (levelManager.CurrentWave >= levelManager.TotalWaves && levelManager.TotalWaves != 0)
+            nextWaveUI.SetActive(false);
+        else if (!nextWaveUI.activeSelf)
+            nextWaveUI.SetActive(true);
         UpdateWave(levelManager.CurrentWave);
     }
 

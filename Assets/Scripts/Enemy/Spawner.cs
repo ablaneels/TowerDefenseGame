@@ -60,7 +60,7 @@ public class Spawner : MonoBehaviour
     {
         if (newVal < 0)
             newVal = 0;
-        if (newVal <= 0 && _ennemiesSpawned == ennemyCountToKill && !LevelManager.EndOfGamel)
+        if (newVal <= 0 && _ennemiesSpawned >= ennemyCountToKill && !LevelManager.EndOfGamel)
         {
             levelManager.WaveCompleted();
         }
@@ -69,7 +69,7 @@ public class Spawner : MonoBehaviour
     public void SpawnNextWave()
     {
         ennemyCount += 5;
-        ennemyCountToKill += (ennemyCount + 5);
+        ennemyCountToKill += ennemyCount;
         levelManager.CurrentWave += 1;
         LevelManager.OnUpdateUILevel?.Invoke(levelManager);
         if (levelManager.CurrentWave > 3)
@@ -81,6 +81,7 @@ public class Spawner : MonoBehaviour
             _pooler.enemy2MoveSpeed += 0.3f;
             _pooler.enemy3MoveSpeed += 0.1f;
         }
+        _pooler.InitPooler();
         _pooler.CreatePooler();
         OnUpdateWaveEnnemies?.Invoke(this);
     }

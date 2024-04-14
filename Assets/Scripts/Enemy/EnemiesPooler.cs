@@ -30,7 +30,6 @@ public class EnemiesPooler : MonoBehaviour
         enemy2MoveSpeed = 1.5f;
         enemy3MoveSpeed = 1f;
         InitPooler();
-        //CreatePooler();
     }
 
     public void CreatePooler()
