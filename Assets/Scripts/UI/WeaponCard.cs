@@ -35,10 +35,41 @@ public class WeaponCard : MonoBehaviour
             var CurrentWeapon = Instantiate(weapon, UIManager.Instance.Node.transform);
             UIManager.Instance.Node.transform.GetComponent<Tile>().weapon = CurrentWeapon.GetComponent<Weapon>();
             UIManager.Instance.Node.transform.GetComponent<Tile>().SetIsAvailable(false);
+            if (CurrentWeapon.name.Contains("Weapon_1"))
+                CurrentWeapon.GetComponent<Weapon>().Weapon1Position(UIManager.Instance.Node.transform.GetComponent<Tile>());
             UIManager.Instance.WeaponCard = null;
             UIManager.Instance.Node = null;
 
         }
         GridManager.OnWeaponIsSelected?.Invoke(false);
+    }
+
+    public void UpdateMoney(int newValue)
+    {
+        if (Convert.ToInt32(weaponCost.text) > newValue)
+        {
+            weaponImage.color = new Color32(79, 79, 79, 255);
+            GetComponent<Button>().enabled = false;
+        }
+        else
+        {
+            weaponImage.color = new Color32(255, 255, 255, 255);
+            GetComponent<Button>().enabled = true;
+        }
+    }
+
+    private void UpdateMoney(CurrencySystem currencySystem)
+    {
+        UpdateMoney(currencySystem.TotalCoins);
+    }
+
+    private void OnEnable()
+    {
+        CurrencySystem.OnUpdateUIMoney += UpdateMoney;
+    }
+
+    private void OnDisable()
+    {
+        CurrencySystem.OnUpdateUIMoney  -= UpdateMoney;
     }
 }

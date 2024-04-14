@@ -21,14 +21,12 @@ public class MenuManager : MonoBehaviour
     public void ChooseMap()
     {
         selectedMap = EventSystem.current.currentSelectedGameObject.name;
-        Debug.Log("selectedMap: " + selectedMap);
         modeUI.SetActive(true);
     }
 
     public void ChooseMode()
     {
         selectedMode = EventSystem.current.currentSelectedGameObject.name;
-        Debug.Log("selectedMode: " + selectedMode);
 
         PlayerPrefs.SetString("Map", selectedMap);
         PlayerPrefs.SetString("Mode", selectedMode);

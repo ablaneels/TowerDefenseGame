@@ -286,6 +286,7 @@ MonoBehaviour:
   CurrentEnemyTarget: {fileID: 0}
   WeaponUpgrade: {fileID: 0}
   weaponRange: {fileID: 2510491511315108572}
+  shouldRotate: 1
 --- !u!58 &6462886412360223333
 CircleCollider2D:
   m_ObjectHideFlags: 0

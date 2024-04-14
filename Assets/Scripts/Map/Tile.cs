@@ -74,4 +74,11 @@ public class Tile : MonoBehaviour
     {
         IsAvailable = newValue;
     }
+
+    public bool IsTileRoad()
+    {
+        if (_tilename == "ClassicRPG_Sheet_44")
+            return false;
+        return true;
+    }
 }

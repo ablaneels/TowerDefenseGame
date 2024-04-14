@@ -28,6 +28,8 @@ public class LevelManager : MonoBehaviour
     public string currentMap;
     public string currentMode;
 
+    public List<GameObject> maps;
+
     void Awake()
     {
         if (Instance != null)
@@ -43,6 +45,7 @@ public class LevelManager : MonoBehaviour
             currentMap = PlayerPrefs.GetString("Map");
             currentMode = PlayerPrefs.GetString("Mode");
             SetUpMode();
+            SetUpMap();
         }
         else
         {
@@ -83,7 +86,6 @@ public class LevelManager : MonoBehaviour
 
     private void ReduceLives(Enemy enemy)
     {
-        Debug.Log("TotalLives: " + TotalLives);
         TotalLives--;
         if (TotalLives <= 0)
         {
@@ -116,8 +118,6 @@ public class LevelManager : MonoBehaviour
     {
         EndOfGamel = true;
         scores.Add(newScore);
-        Debug.Log(newScore);
-        Debug.Log(scores);
         uIManager.winUI.transform.Find("Score").GetComponent<TextMeshProUGUI>().text = newScore.ToString();
         Debug.Log("WINGAME");
         uIManager.ShowYouWinUI();
@@ -218,26 +218,30 @@ public class LevelManager : MonoBehaviour
         }
     }
 
-    // private void SetUpMap()
-    // {
-    //     switch(currentMap)
-    //     {
-    //         case "Map1":
-    //             break;
-    //         case "Map2":
-    //             break;
-    //         case "Map3":
-    //             break;
-    //         case "Map4":
-    //             break;
-    //         case "Map5":
-    //             break;
-    //         case "Map6":
-    //             break;
-    //         default:
-    //             break;
-    //     }
-    // }
+    private void SetUpMap()
+    {
+        switch(currentMap)
+        {
+            case "Map1":
+                maps[0].SetActive(true);
+                CurrentWayPoint = maps[0].GetComponent<Waypoint>();
+                break;
+            case "Map2":
+                maps[1].SetActive(true);
+                CurrentWayPoint = maps[1].GetComponent<Waypoint>();
+                break;
+            case "Map3":
+                maps[2].SetActive(true);
+                CurrentWayPoint = maps[2].GetComponent<Waypoint>();
+                break;
+            case "Map4":
+                maps[3].SetActive(true);
+                CurrentWayPoint = maps[3].GetComponent<Waypoint>();
+                break;
+            default:
+                break;
+        }
+    }
     public void GoToMenuScene()
     {
         StartCoroutine(LoadAsyncchronously("MenuScene"));

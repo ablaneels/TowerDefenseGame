@@ -62,8 +62,6 @@ public class UIManager : MonoBehaviour
             enemyType2 = newValue / 3;
             enemyType3 = newValue / 3;
         }
-        Debug.Log("Enemy wave: " + newValue);
-        Debug.Log("Current wave: " + currentWave);
     }
 
     public void UpdateNextWaveEnnemies(int newValue)
@@ -95,9 +93,6 @@ public class UIManager : MonoBehaviour
             nextWaveUI.transform.Find("Enemy2").Find("Enemy Number").GetComponent<TextMeshProUGUI>().text = enemyType2.ToString();
             nextWaveUI.transform.Find("Enemy3").Find("Enemy Number").GetComponent<TextMeshProUGUI>().text = enemyType3.ToString();
         }
-
-        Debug.Log("Next Enemy wave: " + nextValue);
-        Debug.Log("Next wave: " + nextWave);
     }
 
     public void SetNode(Node node)
