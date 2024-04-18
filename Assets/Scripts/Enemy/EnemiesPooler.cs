@@ -121,15 +121,14 @@ public class EnemiesPooler : MonoBehaviour
         EventSender _eventSender;
         _eventSender = FindObjectOfType<EventSender>();
         Destroy(instance);
+        Spawner.SetEnnemyCountToKill();
         _eventSender.ennemiesRemaining--;
     }
 
-    public static IEnumerator ReturnToPoolWithDelay(GameObject instance, float delay)
+    public static void ReturnToPoolWithDelay(GameObject instance)
     {
         EventSender _eventSender;
         _eventSender = FindObjectOfType<EventSender>();
-
-        yield return new WaitForSeconds(delay);
         Destroy(instance);
         _eventSender.ennemiesRemaining--;
     }

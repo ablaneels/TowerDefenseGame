@@ -7,10 +7,12 @@ using System;
 public class Spawner : MonoBehaviour
 {
     public static Action<Spawner> OnUpdateWaveEnnemies;
+    public static Action<Spawner> OnUpdateEnemiesToKill;
 
     [Header ("Settings")]
     [SerializeField] private int ennemyCount = 10;
-    [SerializeField] private int ennemyCountToKill = 10;
+    [SerializeField] private int totalEnnemyCountToKill = 10;
+    static private int ennemyCountToKill = 10;
     [SerializeField] private GameObject testGo;
 
     [Header ("Fixed Delay")]
@@ -42,7 +44,7 @@ public class Spawner : MonoBehaviour
         if (_spawnTimer < 0)
         {
             _spawnTimer = delayBtwSpawns;
-            if (_ennemiesSpawned < ennemyCountToKill)
+            if (_ennemiesSpawned < totalEnnemyCountToKill)
                 SpawnEnnemy();
         }
     }
@@ -58,9 +60,10 @@ public class Spawner : MonoBehaviour
 
     private void VariableChangeHandler(int newVal)
     {
+        OnUpdateEnemiesToKill?.Invoke(this);
         if (newVal < 0)
             newVal = 0;
-        if (newVal <= 0 && _ennemiesSpawned >= ennemyCountToKill && !LevelManager.EndOfGamel)
+        if (newVal <= 0 && ennemyCountToKill == 0 && !LevelManager.EndOfGamel)
         {
             levelManager.WaveCompleted();
         }
@@ -69,6 +72,7 @@ public class Spawner : MonoBehaviour
     public void SpawnNextWave()
     {
         ennemyCount += 5;
+        totalEnnemyCountToKill += ennemyCount;
         ennemyCountToKill += ennemyCount;
         levelManager.CurrentWave += 1;
         LevelManager.OnUpdateUILevel?.Invoke(levelManager);
@@ -90,6 +94,7 @@ public class Spawner : MonoBehaviour
     {
         _ennemiesSpawned = 0;
         ennemyCount += 5;
+        totalEnnemyCountToKill = ennemyCount;
         ennemyCountToKill = ennemyCount;
         OnUpdateWaveEnnemies?.Invoke(this);
     }
@@ -102,5 +107,15 @@ public class Spawner : MonoBehaviour
     public int GetEnnemyCount()
     {
         return ennemyCount;
+    }
+
+    public int GetEnnemyCountToKill()
+    {
+        return ennemyCountToKill;
+    }
+
+    static public void SetEnnemyCountToKill()
+    {
+        ennemyCountToKill--;
     }
 }

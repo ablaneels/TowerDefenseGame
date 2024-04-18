@@ -10,6 +10,7 @@ public class UIManager : MonoBehaviour
     public GameObject canvas;
     public TextMeshProUGUI money;
     public TextMeshProUGUI wave;
+    public TextMeshProUGUI EnemiesToKill;
     public GameObject nextWaveUI;
     public GameObject winUI;
     public GameObject lostUI;
@@ -97,6 +98,11 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    public void UpdateEnemiesToKill(int ennemyCountToKill)
+    {
+        EnemiesToKill.text = ennemyCountToKill.ToString();
+    }
+
     public void SetNode(Node node)
     {
         Node = node;
@@ -147,17 +153,24 @@ public class UIManager : MonoBehaviour
         UpdateNextWaveEnnemies(spawner.GetEnnemyCount());
     }
 
+    private void UpdateEnemiesToKill(Spawner spawner)
+    {
+        UpdateEnemiesToKill(spawner.GetEnnemyCountToKill());
+    }
+
     private void OnEnable()
     {
         LevelManager.OnUpdateUILevel += UpdateWave;
         CurrencySystem.OnUpdateUIMoney += UpdateMoney;
         Spawner.OnUpdateWaveEnnemies += UpdateWaveEnnemies;
+        Spawner.OnUpdateEnemiesToKill += UpdateEnemiesToKill;
     }
 
     private void OnDisable()
     {
         LevelManager.OnUpdateUILevel -= UpdateWave;
         CurrencySystem.OnUpdateUIMoney  -= UpdateMoney;
-        Spawner.OnUpdateWaveEnnemies += UpdateWaveEnnemies;
+        Spawner.OnUpdateWaveEnnemies -= UpdateWaveEnnemies;
+        Spawner.OnUpdateEnemiesToKill -= UpdateEnemiesToKill;
     }
 }
