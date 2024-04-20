@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Weapon : MonoBehaviour
 {
+    [SerializeField] protected float delayBtwAttacks;
+    [SerializeField] protected float damage;
     public List<Enemy> _enemies;
     public Enemy CurrentEnemyTarget;
     public WeaponUpgrade WeaponUpgrade;
@@ -43,6 +45,26 @@ public class Weapon : MonoBehaviour
                 _enemies.Remove(enemy);
             }
         }
+    }
+
+    public float GetDelayBtwAttacks()
+    {
+        return delayBtwAttacks;
+    }
+
+    public void SetDelayBtwAttacks(float newValue)
+    {
+        delayBtwAttacks += newValue;
+    }
+
+    public float GetDamage()
+    {
+        return damage;
+    }
+
+    public void SetDamage(float newValue)
+    {
+        damage += newValue;
     }
 
     void GetCurrentEnemyTarget()

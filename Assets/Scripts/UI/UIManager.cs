@@ -14,6 +14,7 @@ public class UIManager : MonoBehaviour
     public GameObject nextWaveUI;
     public GameObject winUI;
     public GameObject lostUI;
+    public GameObject weaponInfo;
 
     private int currentWave;
     private int enemyType1;
@@ -33,6 +34,7 @@ public class UIManager : MonoBehaviour
         }
         Instance = this;
     }
+
 
     public void UpdateMoney(int newValue)
     {

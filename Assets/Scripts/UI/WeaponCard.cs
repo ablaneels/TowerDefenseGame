@@ -8,6 +8,7 @@ using UnityEngine.UI;
 public class WeaponCard : MonoBehaviour
 {
     [SerializeField] private Image weaponImage;
+    [SerializeField] private Image weaponFilter;
     [SerializeField] private TextMeshProUGUI weaponCost;
     private GameObject weapon;
 
@@ -17,8 +18,23 @@ public class WeaponCard : MonoBehaviour
     {
         WeaponLoaded = weaponSettings;
         weaponImage.sprite = weaponSettings.WeaponShopSprite;
+        weaponImage.color = weaponSettings.color;
         weaponCost.text = weaponSettings.WeaponShopCost.ToString();
         weapon = weaponSettings.WeaponPrefab;
+    }
+
+    public void OnEnterOverWeapon()
+    {
+        UIManager.Instance.weaponInfo.GetComponent<WeaponInfo>().weaponName.text = weapon.name;
+        UIManager.Instance.weaponInfo.GetComponent<WeaponInfo>().lvl.text = "LVL: 0";
+        UIManager.Instance.weaponInfo.GetComponent<WeaponInfo>().spd.text = "SPD: " + weapon.GetComponent<Weapon>().GetDelayBtwAttacks().ToString();
+        UIManager.Instance.weaponInfo.GetComponent<WeaponInfo>().atk.text = "ATK: " + weapon.GetComponent<Weapon>().GetDamage().ToString();
+        UIManager.Instance.weaponInfo.SetActive(true);
+    }
+
+    public void OnExitOverWeapon()
+    {
+        UIManager.Instance.weaponInfo.SetActive(false);
     }
 
     public void SelectWeapon()
@@ -48,12 +64,12 @@ public class WeaponCard : MonoBehaviour
     {
         if (Convert.ToInt32(weaponCost.text) > newValue)
         {
-            weaponImage.color = new Color32(79, 79, 79, 255);
+            weaponFilter.color = new Color32(0, 0, 0, 180);
             GetComponent<Button>().enabled = false;
         }
         else
         {
-            weaponImage.color = new Color32(255, 255, 255, 255);
+            weaponFilter.color = new Color32(0, 0, 0, 0);
             GetComponent<Button>().enabled = true;
         }
     }

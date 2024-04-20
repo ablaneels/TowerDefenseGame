@@ -2,8 +2,6 @@ using UnityEngine;
 
 public class WeaponZoneDamage : MonoBehaviour
 {
-    [SerializeField] protected float delayBtwAttacks = 2f;
-    [SerializeField] protected float damage = 10f;
 
     public float Damage { get; set; }
     public float DelayPerShot { get; set; }
@@ -16,8 +14,8 @@ public class WeaponZoneDamage : MonoBehaviour
     {
         _weapon = GetComponent<Weapon>();
 
-        Damage = damage;
-        DelayPerShot = delayBtwAttacks;
+        Damage = _weapon.GetDamage();
+        DelayPerShot = _weapon.GetDelayBtwAttacks();
     }
 
     // Update is called once per frame

@@ -282,6 +282,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 630dc4435f055457780cbc2836c33387, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  delayBtwAttacks: 1
+  damage: 10
   _enemies: []
   CurrentEnemyTarget: {fileID: 0}
   WeaponUpgrade: {fileID: 0}

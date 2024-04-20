@@ -5,8 +5,6 @@ using UnityEngine;
 public class WeaponLaserDamage : MonoBehaviour
 {
     [SerializeField] protected Transform projectileSpawnPosition;
-    [SerializeField] protected float delayBtwAttacks = 2f;
-    [SerializeField] protected float damage = 10f;
 
     public float DelayPerShot { get; set; }
 
@@ -22,8 +20,8 @@ public class WeaponLaserDamage : MonoBehaviour
         _weapon = GetComponent<Weapon>();
         _pooler = GetComponent<ObjectPooler>();
 
-        lazer.GetComponent<Lazer>().Damage = damage;
-        DelayPerShot = delayBtwAttacks;
+        lazer.GetComponent<Lazer>().Damage = _weapon.GetDamage();
+        DelayPerShot = _weapon.GetDelayBtwAttacks();
     }
 
     // Update is called once per frame
