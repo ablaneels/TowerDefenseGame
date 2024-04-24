@@ -12,7 +12,8 @@ public class LevelManager : MonoBehaviour
     public static LevelManager Instance { get; private set; }
 
     public static Action<LevelManager> OnUpdateUILevel;
-    public static bool EndOfGamel { get; private set; }
+    public static bool EndOfGame { get; private set; }
+    public static bool PauseGame { get; private set; }
 
     public Waypoint CurrentWayPoint;
     public Spawner spawner;
@@ -39,7 +40,8 @@ public class LevelManager : MonoBehaviour
             return;
         }
         Instance = this;
-        EndOfGamel = false;
+        EndOfGame = false;
+        PauseGame = false;
         if (PlayerPrefs.HasKey("Map") && PlayerPrefs.HasKey("Mode"))
         {
             currentMap = PlayerPrefs.GetString("Map");
@@ -84,6 +86,15 @@ public class LevelManager : MonoBehaviour
         Spawner.OnUpdateWaveEnnemies?.Invoke(spawner);
     }
 
+    void Update()
+    {
+        if (Input.GetKey("escape") || Input.GetKey("space"))
+        {
+            PauseGame = true;
+            uIManager.ShowPauseUI();
+        }
+    }
+
     private void ReduceLives(Enemy enemy)
     {
         TotalLives--;
@@ -106,7 +117,7 @@ public class LevelManager : MonoBehaviour
 
     private void GameOver()
     {
-        EndOfGamel = true;
+        EndOfGame = true;
         enemiesPooler.EndOfGame();
         scores.Add(newScore);
         uIManager.lostUI.transform.Find("Score").GetComponent<TextMeshProUGUI>().text = newScore.ToString();
@@ -116,7 +127,7 @@ public class LevelManager : MonoBehaviour
 
     private void WinGame()
     {
-        EndOfGamel = true;
+        EndOfGame = true;
         scores.Add(newScore);
         uIManager.winUI.transform.Find("Score").GetComponent<TextMeshProUGUI>().text = newScore.ToString();
         Debug.Log("WINGAME");
@@ -181,6 +192,7 @@ public class LevelManager : MonoBehaviour
         }
         PlayerPrefs.SetString(currentMap + "_" + currentMode + "_Score", str);
         PlayerPrefs.Save();
+        StartCoroutine(LoadAsyncchronously("GameScene"));
     }
     
     public void GoBackToMenu()
@@ -195,6 +207,17 @@ public class LevelManager : MonoBehaviour
         PlayerPrefs.SetString(currentMap + "_" + currentMode + "_Score", str);
         PlayerPrefs.Save();
         GoToMenuScene();
+    }
+
+    public void PlayGame()
+    {
+        PauseGame = false;
+        uIManager.HidePauseUI();
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
     }
 
     private void SetUpMode()
@@ -242,6 +265,7 @@ public class LevelManager : MonoBehaviour
                 break;
         }
     }
+
     public void GoToMenuScene()
     {
         StartCoroutine(LoadAsyncchronously("MenuScene"));

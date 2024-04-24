@@ -33,7 +33,7 @@ public class WeaponProjectile : MonoBehaviour
         {
             LoadProjectile();
         }
-        if (Time.time > _nextAttackTime)
+        if (Time.time > _nextAttackTime && !LevelManager.EndOfGame && !LevelManager.PauseGame)
         {
             if (_weapon.CurrentEnemyTarget != null && _currentProjectileLoaded != null && _weapon.CurrentEnemyTarget._enemyHealth.CurrentHealth > 0f)
             {

@@ -14,6 +14,7 @@ public class UIManager : MonoBehaviour
     public GameObject nextWaveUI;
     public GameObject winUI;
     public GameObject lostUI;
+    public GameObject pauseUI;
     public GameObject weaponInfo;
     public GameObject enemyInfo;
 
@@ -126,6 +127,11 @@ public class UIManager : MonoBehaviour
         winUI.SetActive(true);
     }
 
+    public void ShowPauseUI()
+    {
+        pauseUI.SetActive(true);
+    }
+
     public void HideYouLostUI()
     {
         lostUI.SetActive(false);
@@ -134,6 +140,11 @@ public class UIManager : MonoBehaviour
     public void HideYouWinUI()
     {
         winUI.SetActive(false);
+    }
+
+    public void HidePauseUI()
+    {
+        pauseUI.SetActive(false);
     }
 
     private void UpdateMoney(CurrencySystem currencySystem)

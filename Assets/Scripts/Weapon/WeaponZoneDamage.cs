@@ -21,7 +21,7 @@ public class WeaponZoneDamage : MonoBehaviour
     // Update is called once per frame
     protected virtual void Update()
     {
-        if (Time.time > _nextAttackTime)
+        if (Time.time > _nextAttackTime && !LevelManager.EndOfGame && !LevelManager.PauseGame)
         {
             if (_weapon.CurrentEnemyTarget != null && _weapon.CurrentEnemyTarget._enemyHealth.CurrentHealth > 0f)
             {

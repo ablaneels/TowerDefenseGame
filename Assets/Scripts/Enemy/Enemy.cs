@@ -33,12 +33,15 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Move();
-        Rotate();
-
-        if (CurrentPointPositionReached())
+        if (!LevelManager.EndOfGame && !LevelManager.PauseGame)
         {
-            UpdateCurrentPointIndex();
+            Move();
+            Rotate();
+
+            if (CurrentPointPositionReached())
+            {
+                UpdateCurrentPointIndex();
+            }
         }
     }
 

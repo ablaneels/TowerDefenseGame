@@ -41,7 +41,7 @@ public class Spawner : MonoBehaviour
     void Update()
     {
         _spawnTimer -= Time.deltaTime;
-        if (_spawnTimer < 0)
+        if (_spawnTimer < 0 && !LevelManager.EndOfGame && !LevelManager.PauseGame)
         {
             _spawnTimer = delayBtwSpawns;
             if (_ennemiesSpawned < totalEnnemyCountToKill)
@@ -63,7 +63,7 @@ public class Spawner : MonoBehaviour
         OnUpdateEnemiesToKill?.Invoke(this);
         if (newVal < 0)
             newVal = 0;
-        if (newVal <= 0 && ennemyCountToKill == 0 && !LevelManager.EndOfGamel)
+        if (newVal <= 0 && ennemyCountToKill == 0 && !LevelManager.EndOfGame)
         {
             levelManager.WaveCompleted();
         }
