@@ -15,6 +15,7 @@ public class UIManager : MonoBehaviour
     public GameObject winUI;
     public GameObject lostUI;
     public GameObject weaponInfo;
+    public GameObject enemyInfo;
 
     private int currentWave;
     private int enemyType1;
