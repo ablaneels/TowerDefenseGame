@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Weapon2
   m_EditorClassIdentifier: 
   WeaponPrefab: {fileID: 8169954494470176206, guid: 961cc0bf91ae04adf903d9a164fbc972, type: 3}
-  WeaponShopCost: 150
+  WeaponShopCost: 100
   WeaponShopSprite: {fileID: 7482667652216324306, guid: 75f5f34dc1b5347e0b8351032682f224, type: 3}
   color: {r: 0, g: 0.8627451, b: 1, a: 1}

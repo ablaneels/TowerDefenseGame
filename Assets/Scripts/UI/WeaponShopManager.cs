@@ -11,7 +11,17 @@ public class WeaponShopManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        for (int i = 0; i < weapons.Count; i++)
+        var currentMap = PlayerPrefs.GetString("Map");
+        int weaponCount;
+
+        if ("Map1" == currentMap)
+            weaponCount = 1;
+        else if ("Map2" == currentMap)
+            weaponCount = 2;
+        else
+            weaponCount = weapons.Count;
+            
+        for (int i = 0; i < weaponCount; i++)
         {
             GameObject currentInstance = Instantiate(weaponCardPrefab, weaponPanelContainer);
             currentInstance.GetComponent<WeaponCard>().SetUpWeaponButton(weapons[i]);
