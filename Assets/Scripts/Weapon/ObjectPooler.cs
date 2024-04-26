@@ -14,7 +14,6 @@ public class ObjectPooler : MonoBehaviour
         poolSize = 10;
         _pool = new List<GameObject>();
         _poolContainer = new GameObject($"Pool - {prefab.name}");
-        //CreatePooler();
     }
 
     private void CreatePooler()

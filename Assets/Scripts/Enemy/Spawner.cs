@@ -10,9 +10,9 @@ public class Spawner : MonoBehaviour
     public static Action<Spawner> OnUpdateEnemiesToKill;
 
     [Header ("Settings")]
-    [SerializeField] private int ennemyCount = 10;
-    [SerializeField] private int totalEnnemyCountToKill = 10;
-    static private int ennemyCountToKill = 10;
+    [SerializeField] private int enemyCount = 10;
+    [SerializeField] private int totalEnemyCountToKill = 10;
+    static private int enemyCountToKill = 10;
     [SerializeField] private GameObject testGo;
 
     [Header ("Fixed Delay")]
@@ -44,12 +44,12 @@ public class Spawner : MonoBehaviour
         if (_spawnTimer < 0 && !LevelManager.EndOfGame && !LevelManager.PauseGame)
         {
             _spawnTimer = delayBtwSpawns;
-            if (_ennemiesSpawned < totalEnnemyCountToKill)
-                SpawnEnnemy();
+            if (_ennemiesSpawned < totalEnemyCountToKill)
+                SpawnEnemy();
         }
     }
 
-    private void SpawnEnnemy()
+    private void SpawnEnemy()
     {
         GameObject newInstance = _pooler.GetInstanceFromPool(_ennemiesSpawned);
         newInstance.GetComponent<Enemy>().Waypoint = levelManager.CurrentWayPoint;
@@ -63,7 +63,7 @@ public class Spawner : MonoBehaviour
         OnUpdateEnemiesToKill?.Invoke(this);
         if (newVal < 0)
             newVal = 0;
-        if (newVal <= 0 && ennemyCountToKill == 0 && !LevelManager.EndOfGame)
+        if (newVal <= 0 && enemyCountToKill == 0 && !LevelManager.EndOfGame)
         {
             levelManager.WaveCompleted();
         }
@@ -71,9 +71,8 @@ public class Spawner : MonoBehaviour
 
     public void SpawnNextWave()
     {
-        ennemyCount += 5;
-        totalEnnemyCountToKill += ennemyCount;
-        ennemyCountToKill += ennemyCount;
+        enemyCount += 5;
+        totalEnemyCountToKill += enemyCount;
         levelManager.CurrentWave += 1;
         LevelManager.OnUpdateUILevel?.Invoke(levelManager);
         if (levelManager.CurrentWave > 3)
@@ -85,7 +84,7 @@ public class Spawner : MonoBehaviour
             _pooler.enemy2MoveSpeed += 0.3f;
             _pooler.enemy3MoveSpeed += 0.1f;
         }
-        _pooler.InitPooler();
+        _pooler.InitPooler(false);
         _pooler.CreatePooler();
         OnUpdateWaveEnnemies?.Invoke(this);
     }
@@ -93,9 +92,8 @@ public class Spawner : MonoBehaviour
     public void ResetSpawner()
     {
         _ennemiesSpawned = 0;
-        ennemyCount += 5;
-        totalEnnemyCountToKill = ennemyCount;
-        ennemyCountToKill = ennemyCount;
+        enemyCount += 5;
+        totalEnemyCountToKill = enemyCount;
         OnUpdateWaveEnnemies?.Invoke(this);
     }
 
@@ -104,18 +102,23 @@ public class Spawner : MonoBehaviour
         return _ennemiesSpawned;
     }
 
-    public int GetEnnemyCount()
+    public int GetEnemyCount()
     {
-        return ennemyCount;
+        return enemyCount;
     }
 
-    public int GetEnnemyCountToKill()
+    public int GetEnemyCountToKill()
     {
-        return ennemyCountToKill;
+        return enemyCountToKill;
     }
 
-    static public void SetEnnemyCountToKill()
+    static public void SetEnemyCountToKillAfterKill()
     {
-        ennemyCountToKill--;
+        enemyCountToKill--;
+    }
+
+    static public void SetEnemyCountToKill(int newValue)
+    {
+        enemyCountToKill = newValue;
     }
 }

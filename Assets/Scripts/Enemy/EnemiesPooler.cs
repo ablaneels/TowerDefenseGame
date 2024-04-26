@@ -29,7 +29,7 @@ public class EnemiesPooler : MonoBehaviour
         enemy1MoveSpeed = 2f;
         enemy2MoveSpeed = 1.5f;
         enemy3MoveSpeed = 1f;
-        InitPooler();
+        InitPooler(true);
     }
 
     public void CreatePooler()
@@ -56,15 +56,17 @@ public class EnemiesPooler : MonoBehaviour
             }
             _pool.Add(CreateInstance());
         }
+        Spawner.SetEnemyCountToKill(_poolContainer.transform.childCount);
     }
 
-    public void InitPooler()
+    public void InitPooler(bool newpool)
     {
         if (levelManager.CurrentWave > 1)
             poolSize += 5;
         else
             poolSize = 10;
-        _pool = new List<GameObject>();
+        if (newpool)
+            _pool = new List<GameObject>();
         if (_poolContainer == null)
             _poolContainer = new GameObject($"Pool - Enemy");
     }
@@ -101,6 +103,7 @@ public class EnemiesPooler : MonoBehaviour
 
     public GameObject GetInstanceFromPool(int next)
     {
+        Spawner.SetEnemyCountToKill(_poolContainer.transform.childCount);
         for (int i = next; i < _pool.Count; i++)
         {
             if (!_pool[i].activeInHierarchy)
@@ -121,7 +124,7 @@ public class EnemiesPooler : MonoBehaviour
         EventSender _eventSender;
         _eventSender = FindObjectOfType<EventSender>();
         Destroy(instance);
-        Spawner.SetEnnemyCountToKill();
+        Spawner.SetEnemyCountToKillAfterKill();
         _eventSender.ennemiesRemaining--;
     }
 
@@ -130,6 +133,7 @@ public class EnemiesPooler : MonoBehaviour
         EventSender _eventSender;
         _eventSender = FindObjectOfType<EventSender>();
         Destroy(instance);
+        Spawner.SetEnemyCountToKillAfterKill();
         _eventSender.ennemiesRemaining--;
     }
 }

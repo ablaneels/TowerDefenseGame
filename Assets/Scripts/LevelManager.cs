@@ -159,7 +159,7 @@ public class LevelManager : MonoBehaviour
                     enemiesPooler.enemy2MoveSpeed += 0.3f;
                     enemiesPooler.enemy3MoveSpeed += 0.1f;
                 }
-                enemiesPooler.InitPooler();
+                enemiesPooler.InitPooler(true);
                 enemiesPooler.CreatePooler();
                 spawner.ResetSpawner();
             }

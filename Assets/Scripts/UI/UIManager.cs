@@ -102,9 +102,9 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    public void UpdateEnemiesToKill(int ennemyCountToKill)
+    public void UpdateEnemiesToKill(int enemyCountToKill)
     {
-        EnemiesToKill.text = ennemyCountToKill.ToString();
+        EnemiesToKill.text = enemyCountToKill.ToString();
     }
 
     public void SetNode(Node node)
@@ -163,13 +163,13 @@ public class UIManager : MonoBehaviour
 
     private void UpdateWaveEnnemies(Spawner spawner)
     {
-        UpdateWaveEnnemies(spawner.GetEnnemyCount());
-        UpdateNextWaveEnnemies(spawner.GetEnnemyCount());
+        UpdateWaveEnnemies(spawner.GetEnemyCount());
+        UpdateNextWaveEnnemies(spawner.GetEnemyCount());
     }
 
     private void UpdateEnemiesToKill(Spawner spawner)
     {
-        UpdateEnemiesToKill(spawner.GetEnnemyCountToKill());
+        UpdateEnemiesToKill(spawner.GetEnemyCountToKill());
     }
 
     private void OnEnable()
